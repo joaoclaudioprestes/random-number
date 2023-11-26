@@ -1,21 +1,25 @@
-const btnGerar = document.querySelector('#btn-gerar');
+const btnGerar = document.querySelector("#btn-gerar");
+const spanResult = document.querySelector("#result");
 
-function numAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function erro(mensagem) {
+  alert(`ERRO: ${mensagem}`);
+  spanResult.innerText = "00";
 }
 
-btnGerar.addEventListener('click', (e) => {
-    e.preventDefault();
-    const min = parseInt(document.querySelector('#num-min').value);
-    const max = parseInt(document.querySelector('#num-max').value);
-    const result = document.querySelector('#result');
+function numAleatorio(min, max) {
+  let numRandom = Math.floor(Math.random() * (max - min + 1)) + min;
+  return numRandom;
+}
 
-    if ((min >= max || max <= min) || !isNaN(min) || isNaN(max) || (min || max < 0)) {
-        result.style.color = 'red';
-        result.innerText = 'Inválido! Tente novamente.';
-    } else {
-        const numeroAleatorio = numAleatorio(min, max);
-        result.style.color = '#fff';
-        result.innerText = numeroAleatorio;
-    }
+btnGerar.addEventListener("click", (e) => {
+  e.preventDefault();
+  const min = document.querySelector("#num-min").value;
+  const max = document.querySelector("#num-max").value;
+
+  if (!isNaN(min) && !isNaN(max)) {
+    let result = numAleatorio(parseInt(min), parseInt(max));
+    spanResult.innerText = result < 10 ? `0${result}` : result;
+  } else {
+    erro("Preencha os dois campos com valores numéricos válidos.");
+  }
 });
